@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
+
+<style>
+    body {
+        background-image: url('{% static "/images/jellyfish.gif" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
 
 <main class="container py-5">
     <section class="card card-body">
