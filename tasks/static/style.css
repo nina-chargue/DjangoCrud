@@ -1,0 +1,37 @@
+body {
+    background-image: url("images/jellyfishes.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .main-section {
+    background-color: rgba(173, 216, 230, 0.8); 
+    padding: 20px; 
+  }
+  .home-title {
+    color: rgb(74,57,102);
+    font-weight: bold;
+    font-size: 36px; 
+  }
+  .home-description {
+    color: rgb(74,57,102);
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .horoscope-container {
+    display: flex;
+  }
+  
+  .horoscope-left {
+    flex: 1;
+    max-width: 300px;
+    padding: 10px;
+    background-color: rgba(173, 216, 230, 0.8);;
+  }
+  
+  .horoscope-right {
+    flex: 1;
+    padding: 10px;
+  }
+  
