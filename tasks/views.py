@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
+    print("corriendo home")
     return render (request, 'home.html')
 
 def signup(request):
