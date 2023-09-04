@@ -87,7 +87,7 @@ DATABASES = {
     )
 }
 # ****************************************************************************************
-# dev enviroment for RENDER
+# dev enviroment
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
