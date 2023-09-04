@@ -11,7 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-setting_module = 'djangocrud.deployment' if 'WEBSITE_HOSTNAME' in os.environment else 'djangocrud.settings'
+setting_module = 'djangocrud.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'djangocrud.settings'
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', setting_module)
 #os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangocrud.settings')
