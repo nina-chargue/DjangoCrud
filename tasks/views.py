@@ -15,23 +15,29 @@ def home(request):
 
 def signup(request):
     if request.method == 'GET':
-        return render (request, 'signup.html', {
-        'form': UserCreationForm
+        return render(request, 'signup.html', {
+            'form': UserCreationForm
         })
     else:
         if request.POST['password1'] == request.POST['password2']:
-            #register user
+            print("Passwords Match")
+            # Register user
             try:
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
+                print("Registration of user successful!")
                 user.save()
+                print("User saved in the DB")
                 login(request, user)
+                print("Login successful!")  # Corrected spelling
                 return redirect('tasks')
             except IntegrityError:
-                return render (request, 'signup.html', {
+                print("User already exists")
+                return render(request, 'signup.html', {
                     'form': UserCreationForm,
                     'error': 'User already exists'
                 })
-        return render (request, 'signup.html', {
+        print("Password does not match")  # Moved this print out of the else block
+        return render(request, 'signup.html', {
             'form': UserCreationForm,
             'error': 'Password does not match'
         })
