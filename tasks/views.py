@@ -23,13 +23,15 @@ def signup(request):
             print("Passwords Match")
             # Register user
             try:
+                print(request.POST['username'])
+                print(request.POST['password1'])
                 print(User.objects)
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 print("Registration of user successful!")
                 user.save()
                 print("User saved in the DB")
                 login(request, user)
-                print("Login successful!")  # Corrected spelling
+                print("Login successful!")
                 return redirect('tasks')
             except IntegrityError:
                 print("User already exists")
@@ -37,7 +39,7 @@ def signup(request):
                     'form': UserCreationForm,
                     'error': 'User already exists'
                 })
-        print("Password does not match")  # Moved this print out of the else block
+        print("Password does not match")
         return render(request, 'signup.html', {
             'form': UserCreationForm,
             'error': 'Password does not match'
