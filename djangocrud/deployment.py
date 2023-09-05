@@ -1,4 +1,7 @@
 import os
+import logging
+from django.db.utils import OperationalError 
+from django.db import connections
 from .settings import *
 from .settings import BASE_DIR
 
@@ -33,3 +36,13 @@ DATABASES = {
         'PASSWORD': conn_str_params['password'],
     }
 }
+
+# Attempt to establish the database connection
+try:
+    connection = connections['default']
+    connection.ensure_connection()
+    print("Database connection is successful!")
+except OperationalError as e:
+    # Handle the connection error
+    logging.error(f"Database connection error: {e}")
+    print("Database connection failed!")
