@@ -135,10 +135,9 @@ USE_TZ = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# STATICFILES_DIRS = (str(BASE_DIR.joinpath('tasks/static')),)
+STATICFILES_DIRS = (str(BASE_DIR.joinpath('tasks/static')),)
 
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'tasks/static')] 
+STATIC_URL = '/static/'
 
 # if not DEBUG:
 #     # Tell Django to copy statics to the `staticfiles` directory

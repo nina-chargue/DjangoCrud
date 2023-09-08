@@ -6,8 +6,8 @@ from .settings import *
 from .settings import BASE_DIR
 
 SECRET_KEY = os.environ['SECRET']
-# ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
-ALLOWED_HOSTS = ['https://mycodecave.azurewebsites.net']
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
+# ALLOWED_HOSTS = ['https://mycodecave.azurewebsites.net']
 CSRF_TRUSTED_ORIGINS = ['https://'+ os.environ['WEBSITE_HOSTNAME']]
 DEBUG = False
 
