@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django CRUD Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}?v=3">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/">Task Hive<</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="{% url 'tasks' %}" class="nav-link">Tasks Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'tasks_completed' %}" class="nav-link">Tasks Completed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'create_task' %}" class="nav-link">Create Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'login_or_register' %}" class="nav-link">Enter Here</a>
+                    </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="mainContainer">
+        <main class="container py-5">
+            <section class="card card-body main-section">
+                <h1 class="display-1 text-center home-title">Welcome to Task Hive</h1>
+                <p class="home-description"> This Django project serves as a living portfolio, demonstrating my proficiency in web development and my commitment to continuous learning. As a passionate developer, I've crafted this platform to not only showcase my technical capabilities but also to provide a glimpse into my creative problem-solving approach. Dive in, explore my little project.</p>
+            </section>
+        </main>
+
+        <main class="container py-5">
+            <section class="card card-body main-section">
+                <div>
+                    <h1>Your tasks. Organized.</h1>
+                    <p>
+                </div>
+            </section>
+        </main>
+
+        <main class="flex-1">
+          <section class="">
+            <div class="container flex flex-col items-center justify-center px-4 md:px-6 space-y-4 text-center">
+              <div class="space-y-2">
+                <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">Your tasks. Organized.</h1>
+                <p class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">The only task management platform you'll ever need. Beautifully designed. Incredibly intuitive.</p>
+              </div>
+              <div class="flex flex-col gap-2 min-[400px]:flex-row">
+                <a class="main-button" href="{% url 'login_or_register' %}">Sign Up</a>
+                <a class="main-button" href="#">Learn more</a>
+              </div>
+            </div>
+          </section>
+      
+          <section class="w-full py-12 md:py-24 lg:py-32 border-t">
+            <div class="container grid items-center gap-4 px-4 text-center md:px-6">
+              <div class="space-y-3">
+                <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">Features</h2>
+                <p class="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">The platform for rapid progress. Let your team focus on shipping features instead of managing infrastructure with automated CI/CD, built-in testing, and integrated collaboration.</p>
+              </div>
+              <div class="mx-auto grid max-w-3xl items-start gap-10 sm:gap-6 lg:grid-cols-2 lg:gap-12">
+                <div class="flex flex-col gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <div class="space-y-2 text-center sm:text-left">
+                    <h3 class="text-xl font-bold">Task Creation</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Easily create new tasks with our intuitive interface. Add descriptions, due dates, and more.</p>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                    <polyline points="16 7 22 7 22 13"></polyline>
+                  </svg>
+                  <div class="space-y-2 text-center sm:text-left">
+                    <h3 class="text-xl font-bold">Task Tracking</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Track the progress of your tasks. See what's been done and what's left.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+
+        <main class="container py-5">
+            <section class="card card-body main-section">
+                <div class="space-y-2">
+                    <div>
+                        <h1>Your tasks. Organized.</h1>
+                        <p>The only task management platform you'll ever need. Beautifully designed. Incredibly intuitive.</p>
+                    </div>
+                    <div class="buttons-section">
+                        <a class="main-button" href="{% url 'login_or_register' %}">Get Started</a>
+                      <a class="main-button" href="#">Learn more</a>
+                    </div>
+                </div>
+            </section>
+            <section class="home-image">
+                <img src="{% static 'images/cover.gif' %}" alt="home image">
+            </section>
+            <section>
+                <div class="container">
+                    <h2>Features</h2>
+                    <p>The platform for rapid progress. Let your team focus on shipping features instead of managing infrastructure with automated CI/CD, built-in testing, and integrated collaboration.</p>
+                </div>
+                <div class="container">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                          </svg>
+                    </div>
+                    <h2>Task Creation</h2>
+                    <p>Easily create new tasks with our intuitive interface. Add descriptions, due dates, and more.</p>
+                </div>
+                <div class="container">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                            <polyline points="16 7 22 7 22 13"></polyline>
+                          </svg>
+                    </div>
+                    <h2>Task Tracking</h2>
+                    <p>Track the progress of your tasks. See what's been done and what's left.</p>
+                </div>
+            </section>
+        </main>
+
+        <main class="flex-1">
+          <section class="">
+            <div class="container flex flex-col items-center justify-center px-4 md:px-6 space-y-4 text-center">
+              <div class="space-y-2">
+                <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">Your tasks. Organized.</h1>
+                <p class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">The only task management platform you'll ever need. Beautifully designed. Incredibly intuitive.</p>
+              </div>
+              <div class="flex flex-col gap-2 min-[400px]:flex-row">
+                <a class="main-button" href="{% url 'login_or_register' %}">Sign Up</a>
+                <a class="main-button" href="#">Learn more</a>
+              </div>
+            </div>
+          </section>
+      
+          <section class="w-full py-12 md:py-24 lg:py-32 border-t">
+            <div class="container grid items-center gap-4 px-4 text-center md:px-6">
+              <div class="space-y-3">
+                <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">Features</h2>
+                <p class="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">The platform for rapid progress. Let your team focus on shipping features instead of managing infrastructure with automated CI/CD, built-in testing, and integrated collaboration.</p>
+              </div>
+              <div class="mx-auto grid max-w-3xl items-start gap-10 sm:gap-6 lg:grid-cols-2 lg:gap-12">
+                <div class="flex flex-col gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <div class="space-y-2 text-center sm:text-left">
+                    <h3 class="text-xl font-bold">Task Creation</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Easily create new tasks with our intuitive interface. Add descriptions, due dates, and more.</p>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                    <polyline points="16 7 22 7 22 13"></polyline>
+                  </svg>
+                  <div class="space-y-2 text-center sm:text-left">
+                    <h3 class="text-xl font-bold">Task Tracking</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Track the progress of your tasks. See what's been done and what's left.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+    </div>
+
+    <script src="scriptHome.js"></script>
+
+</body>
+</html>

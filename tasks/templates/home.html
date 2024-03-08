@@ -1,69 +1,109 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django CRUD Application</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
-
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  {% load static %}
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Django CRUD Application</title>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"/>
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'style.css' %}?v=3"/>
+      <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container">
-          <a class="navbar-brand" href="#">Django App</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="navbar-brand" href="/">TaskHive</a>
+          <button class="navbar-toggler"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="/" class="nav-link">Home</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a href="{% url 'tasks' %}" class="nav-link">Tasks Pending</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'tasks_completed' %}" class="nav-link">Tasks Completed</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'create_task' %}" class="nav-link">Create Tasks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a href="{% url 'signin' %}" class="nav-link">Sign In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'signup' %}" class="nav-link">Sign Up</a>
-                    </li>
-                {% endif %}
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a href="{% url 'tasks' %}" class="nav-link">Tasks Pending</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'tasks_completed' %}" class="nav-link">Tasks Completed</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'create_task' %}" class="nav-link">Create Tasks</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a href="{% url 'login_or_register' %}" class="nav-link">
+                    <img src="{% static 'images/login.svg' %}" alt="Login" class="login-image">
+                </a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
-    </nav>
-
-    <main class="container py-5">
-        <section class="card card-body main-section">
-            <h1 class="display-1 text-center home-title">Welcome to My Django App!</h1>
-            <p class="home-description">Feel free to sign up and explore what else is on the app. </p>
-
-            <div class="text-center">
-                <a class="btn btn-dark" href="/signin">
-                    Signin
-                </a>
-                <a class="btn btn-secondary" href="/signup">
-                    Signup
-                </a>
-            </div>
-
-        </section>
-    </main>
-
-</body>
+      </nav>
+      <div class="container">
+        <main class="container py-5">
+            <section class="card card-body main-section">
+                <div class="space-y-2">
+                    <div>
+                        <h1>Your tasks. Organized.</h1>
+                        <p>The only task management platform you'll ever need. Beautifully designed. Incredibly intuitive.</p>
+                    </div>
+                    <div class="buttons-section">
+                        <a class="main-button" href="{% url 'login_or_register' %}">Begin Task</a>
+                        <!-- <a class="main-button" href="#">Learn more</a> -->
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="sub-container">
+                    <h2>Features</h2>
+                    <p>The platform for rapid progress. Let your team focus on shipping features instead of managing infrastructure with automated CI/CD, built-in testing, and integrated collaboration.</p>
+                </div>
+                <div class="sub-container">
+                    <div class="small-image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h2>Task Creation</h2>
+                    <p>Easily create new tasks with our intuitive interface. Add descriptions, due dates, and more.</p>
+                </div>
+                <div class="sub-container">
+                    <div class="small-image-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                            <polyline points="16 7 22 7 22 13"></polyline>
+                        </svg>
+                    </div>
+                    <h2>Task Tracking</h2>
+                    <p>Track the progress of your tasks. See what's been done and what's left.</p>
+                </div>
+            </section>
+        </main>
+        
+    </div>
+    
+    <footer>
+      <section class="image-container">
+        <!-- <img src="{% static 'images/cover.gif' %}" alt="home image"> -->
+      </section>
+        <div class="footer-container">
+          <p class="text-xs text-gray-500 dark:text-gray-400">© 2024 nina-chargue. All rights reserved.</p>
+        <nav>
+            <a class="text-xs hover:underline underline-offset-4" href="https://github.com/nina-chargue">Github</a>
+            <a class="text-xs hover:underline underline-offset-4" href="https://www.linkedin.com/in/nicole-charpentier/">Contact</a>
+        </nav>
+        </div>
+    </footer>
+    </body>
 </html>

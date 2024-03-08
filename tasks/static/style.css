@@ -1,37 +1,140 @@
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
 body {
-    background-image: url("images/jellyfishes.gif");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
+  font-family: Arial, sans-serif; /* Use a common font for better cross-browser compatibility */
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #343a40; /* Dark background color */
+}
+
+.navbar-brand {
+  color: #ffffff; /* White text color for brand */
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff; /* White text color for nav links */
+}
+
+/* images */
+
+.login-image {
+  width: 30px; /* Adjust the width as per your requirement */
+  height: auto; /* Maintain aspect ratio */
+  fill: #ffffff; 
+  transition: transform 0.3s ease; /* Add transition for smooth size change */
+}
+
+.login-image:hover {
+  transform: scale(2); /* Increase size on hover */
+}
+
+.image-container {
+  background-image: url('images/cover.gif');
+  background-size: cover; /*Scale the background image to cover the entire container */
+  background-repeat: no-repeat; 
+  height: 100px;
+  margin-top: -30px;
+  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.small-image-container{
+  margin-bottom: 10px;
+}
+
+.small-image-container svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* Main section styles */
+.main-section { /* Prevent the background image from repeating */
+  padding: 20px;
+  text-align: center;
+
+}
+
+.buttons-section {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center; /* Center align buttons */
+}
+
+.main-button {
+  border-radius: 20px;
+  border: 1px solid rgb(148,58,48);
+  background-color: rgb(148,58,48);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 80px;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  transition: 0.3s ease-in-out;
+  text-decoration: none; 
+}
+
+.main-button:hover {
+  letter-spacing: 3px;
+  color: #fff;
+}
+
+.main-button:active {
+  transform: scale(0.95);
+}
+
+/* Features section styles */
+.container {
+  text-align: center; /* Center align content */
+}
+
+.sub-container{
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+h2 {
+  margin-bottom: 10px; /* Add space below headings */
+}
+
+/* Footer styles */
+footer {
+  background-color: #343a40; /* Dark background color */
+  color: #ffffff; /* White text color */
+  padding-bottom: 20px;
+  text-align: center;
+  /* position: fixed;
+  bottom: 0; */
+  width: 100%;
+}
+
+footer nav a {
+  color: #ffffff; /* White text color for footer links */
+  margin-right: 10px; /* Add space between links */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .main-section {
-    background-color: rgba(173, 216, 230, 0.8); 
-    padding: 20px; 
+    text-align: center; /* Center align content on smaller screens */
   }
-  .home-title {
-    color: rgb(74,57,102);
-    font-weight: bold;
-    font-size: 36px; 
+
+  .buttons-section {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
   }
-  .home-description {
-    color: rgb(74,57,102);
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 30px;
+
+  .main-button {
+    width: 100%; /* Make buttons full width on smaller screens */
   }
-  .horoscope-container {
-    display: flex;
-  }
-  
-  .horoscope-left {
-    flex: 1;
-    max-width: 300px;
-    padding: 10px;
-    background-color: rgba(173, 216, 230, 0.8);;
-  }
-  
-  .horoscope-right {
-    flex: 1;
-    padding: 10px;
-  }
-  
+}
