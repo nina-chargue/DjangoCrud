@@ -1,5 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins");
 
+/* Tablet */
+@media (max-width: 768px) {
+  .navbar-mobile {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .navbar {
+    .navbar-toggler {
+      display: none;
+    }
+  }
+
+}
+
+.navbar-toggler {
+  position: absolute;
+  right: 20px;
+  left: .5px;
+
+  .navbar-toggle-icon{
+    height: 30px;
+    margin-top: -1px;
+    padding: 10px;
+  }
+}
+
+
 .mainBody{
   height: 200px; /* Set the desired height of the div */
   padding-top: -30px; /* Add padding to the top to make it shorter */
@@ -187,6 +217,28 @@ input {
   width: 100%;
 }
 
+/* Main */
+main{
+  margin-bottom: 204px; /* Adjust this value to match your footer's height */
+
+}
+
+/* Footer styles */
+footer {
+  background-color: #343a40; /* Dark background color */
+  color: #ffffff; /* White text color */
+  padding-bottom: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer nav a {
+  color: #ffffff; /* White text color for footer links */
+  margin-right: 10px; /* Add space between links */
+}
+
 .container {
   background-color: #fff;
   border-radius: 25px;
@@ -341,3 +393,4 @@ input {
 .social-container a:hover {
   border: 1px solid rgb(97,44,35);
 }
+

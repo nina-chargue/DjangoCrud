@@ -23,6 +23,10 @@ body {
   color: #ffffff; /* White text color for nav links */
 }
 
+.navbar-toggle{
+  position: absolute;
+}
+
 /* images */
 
 .login-image {
@@ -60,7 +64,6 @@ body {
 .main-section { /* Prevent the background image from repeating */
   padding: 20px;
   text-align: center;
-
 }
 
 .buttons-section {
@@ -108,15 +111,26 @@ h2 {
   margin-bottom: 10px; /* Add space below headings */
 }
 
+/* Main */
+main{
+  margin-bottom: 204px; /* Adjust this value to match your footer's height */
+
+}
+
 /* Footer styles */
 footer {
   background-color: #343a40; /* Dark background color */
   color: #ffffff; /* White text color */
   padding-bottom: 20px;
   text-align: center;
-  /* position: fixed;
-  bottom: 0; */
+  position: fixed;
+  bottom: 0;
   width: 100%;
+}
+
+footer nav a {
+  color: #ffffff; /* White text color for footer links */
+  margin-right: 10px; /* Add space between links */
 }
 
 footer nav a {
