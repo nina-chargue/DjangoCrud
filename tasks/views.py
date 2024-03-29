@@ -7,51 +7,61 @@ from .forms import TaskForm
 from .models import Task
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.urls import include
 
 
 def login_or_register(request):
     if request.method == 'POST':
-        print(request.POST)
+        # Registration form submission
         if 'password1' in request.POST and 'password2' in request.POST:
-            print("This is a registration attempt")
-            if request.POST['password1'] == request.POST['password2']:
-                print("Passwords Match")
-                try:
-                    print(request.POST['username'])
-                    print(request.POST['password1'])
-                    print(User.objects)
-                    user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                    print("Registration of user successful!")
-                    user.save()
-                    print("User saved in the DB")
-                    login(request, user)
-                    print("Login successful!")
-                    return redirect('tasks')
-                except IntegrityError:
-                    print("User already exists")
-                    return render(request, 'login.html', {
-                        'error': 'User already exists'
-                    })
-            else:
-                print("Password does not match")
-                return render(request, 'login.html', {
-                    'error': 'Password does not match'
-                })
-        else:
-            print("This is a login attempt")
-            user = authenticate(
-                request, username=request.POST['username'], password=request.POST['password'])
+            username_or_email = request.POST.get('username') or request.POST.get('email')
+            password1 = request.POST.get('password1')
+            password2 = request.POST.get('password2')
+            
+            # Ensure all fields are filled
+            if not username_or_email or not password1 or not password2:
+                return render(request, 'login.html', {'error': 'All fields are required.'})
+            
+            # Check if passwords match
+            if password1 != password2:
+                return render(request, 'login.html', {'error': 'Passwords do not match.'})
+            
+            try:
+                # Create a new user
+                user = User.objects.create_user(username=username_or_email, email=username_or_email, password=password1)
+                # Login the new user
+                login(request, user)
+                return redirect('tasks')
+            except IntegrityError:
+                return render(request, 'login.html', {'error': 'User already exists.'})
+        
+        # Login form submission
+        elif 'username' in request.POST and 'password' in request.POST:
+            username_or_email = request.POST.get('username')
+            password = request.POST.get('password')
+            
+            # Ensure both username/email and password are provided
+            if not username_or_email or not password:
+                return render(request, 'login.html', {'error': 'Username or password cannot be blank.'})
+            
+            # Authenticate the user
+            user = authenticate(request, username=username_or_email, password=password)
             if user is None:
-                print("Username or password is incorrect.")
-                return render(request, 'login.html', {
-                    'error': 'Username or password is incorrect.'
-                })
+                return render(request, 'login.html', {'error': 'Username or password is incorrect.'})
+            # Login the authenticated user
             login(request, user)
-            print("Login successful..")
             return redirect('tasks')
                 
     elif request.method == 'GET':
+        # Render the login form
         return render(request, 'login.html')
+
+    # Include django-allauth URLs
+    elif 'accounts' in request.path:
+        return include('allauth.urls')
+
+    # Handle invalid requests
+    return render(request, 'login.html', {'error': 'Invalid request.'})
 
 # def login(request):
 #     if request.method == 'POST':
@@ -90,7 +100,6 @@ def register(request):
         return render(request, 'login.html')
 
 def home(request):
-    print("corriendo home")
     return render (request, 'home.html')
 
 def signup(request):
@@ -202,6 +211,3 @@ def signin(request):
 
         login(request, user)
         return redirect('tasks')
-
-        
-    
