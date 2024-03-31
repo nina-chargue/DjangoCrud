@@ -17,6 +17,11 @@
 
 }
 
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+
 .navbar-toggler {
   position: absolute;
   right: 20px;
@@ -27,13 +32,6 @@
     margin-top: -1px;
     padding: 10px;
   }
-}
-
-
-.mainBody{
-  height: 200px; /* Set the desired height of the div */
-  padding-top: -30px; /* Add padding to the top to make it shorter */
-  background-color: black; /* Just for visualization, you can change the background color as needed */
 }
 
 .navbar{
@@ -72,6 +70,7 @@
   font-family: "Poppins", sans-serif;
   overflow: hidden;
   height: 100vh;
+  padding-bottom: 60px;
 }
 
 h1 {
@@ -247,7 +246,7 @@ footer nav a {
   overflow: hidden;
   width: 768px;
   max-width: 100%;
-  min-height: 500px;
+  min-height: 600px;
 }
 
 .form-container {

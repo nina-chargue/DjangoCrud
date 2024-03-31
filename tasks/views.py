@@ -9,56 +9,61 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import include
 
-
 def login_or_register(request):
     if request.method == 'POST':
         # Registration form submission
         if 'password1' in request.POST and 'password2' in request.POST:
-            username_or_email = request.POST.get('username') or request.POST.get('email')
+            username = request.POST.get('username')
+            email = request.POST.get('email')
             password1 = request.POST.get('password1')
             password2 = request.POST.get('password2')
-            
+
             # Ensure all fields are filled
-            if not username_or_email or not password1 or not password2:
-                return render(request, 'login.html', {'error': 'All fields are required.'})
-            
+            if not (username and email and password1 and password2):
+                return render(request, 'login.html', {'register_error': 'Please fill all missing blanks.'})
+
             # Check if passwords match
             if password1 != password2:
-                return render(request, 'login.html', {'error': 'Passwords do not match.'})
-            
+                return render(request, 'login.html', {'register_error': 'Password must match its confirmation.'})
+
+            # Check if email already exists
+            if User.objects.filter(email=email).exists():
+                return render(request, 'login.html', {'register_error': 'Email already exists.'})
+
+            # Check if username already exists
+            if User.objects.filter(username=username).exists():
+                return render(request, 'login.html', {'register_error': 'Username already exists.'})
+
             try:
                 # Create a new user
-                user = User.objects.create_user(username=username_or_email, email=username_or_email, password=password1)
+                user = User.objects.create_user(username=username, email=email, password=password1)
                 # Login the new user
                 login(request, user)
                 return redirect('tasks')
             except IntegrityError:
-                return render(request, 'login.html', {'error': 'User already exists.'})
-        
+                return render(request, 'login.html', {'register_error': 'User already exists.'})
+
         # Login form submission
-        elif 'username' in request.POST and 'password' in request.POST:
-            username_or_email = request.POST.get('username')
+        elif 'username_or_email' in request.POST and 'password' in request.POST:
+            username_or_email = request.POST.get('username_or_email')
             password = request.POST.get('password')
-            
+
             # Ensure both username/email and password are provided
             if not username_or_email or not password:
-                return render(request, 'login.html', {'error': 'Username or password cannot be blank.'})
-            
-            # Authenticate the user
-            user = authenticate(request, username=username_or_email, password=password)
+                return render(request, 'login.html', {'login_error': 'Username or password is missing.'})
+
+            # Authenticate the user with username or email
+            user = authenticate(request, username=username_or_email, password=password) or \
+                   authenticate(request, email=username_or_email, password=password)
             if user is None:
-                return render(request, 'login.html', {'error': 'Username or password is incorrect.'})
+                return render(request, 'login.html', {'login_error': 'Wrong credentials, try again.'})
             # Login the authenticated user
             login(request, user)
             return redirect('tasks')
-                
+
     elif request.method == 'GET':
         # Render the login form
         return render(request, 'login.html')
-
-    # Include django-allauth URLs
-    elif 'accounts' in request.path:
-        return include('allauth.urls')
 
     # Handle invalid requests
     return render(request, 'login.html', {'error': 'Invalid request.'})
