@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
@@ -8,6 +8,15 @@ from .models import Task
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.urls import include
+# Imports related to email reset password diy
+from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.utils.html import strip_tags
 
 def login_or_register(request):
     if request.method == 'POST':
@@ -216,3 +225,36 @@ def signin(request):
 
         login(request, user)
         return redirect('tasks')
+    
+def password_reset_request(request):
+    if request.method == 'POST':
+        password_form = PasswordResetForm(request.POST)
+        if password_form.is_valid():
+            data = password_form.cleaned_data['email']
+            user_email = User.objects.filter(email=data)
+            if user_email.exists():
+                for user in user_email:
+                    subject = 'Password Reset Request'
+                    email_template_name = 'password_reset_email.html'
+                    parameters = {
+                        'user': user,  # Pass the user object directly
+                        'domain': 'task-hive.azurewebsites.net',
+                        'site_name': 'TaskHive',
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'https',
+                    }
+                    html_message = render_to_string(email_template_name, parameters)
+                    plain_message = strip_tags(html_message)
+                    try:
+                        # Send email with HTML and plain text versions
+                        send_mail(subject, plain_message, 'admin@TaskHive.com', [user.email], html_message=html_message)
+                    except BadHeaderError:
+                        return HttpResponse("Invalid header.")
+                    return redirect('password_reset_done')
+    else:
+        password_form = PasswordResetForm()
+    context = {
+        'password_form': password_form,
+    }
+    return render(request, 'password_reset.html', context)
