@@ -90,9 +90,9 @@ DATABASES = {
 
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "django",
-        "USER": "django@task-hive-db",
+        "USER": "django@taskhive-db",
         "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": "task-hive-db.postgres.database.azure.com",
+        "HOST": "taskhive-db.postgres.database.azure.com",
         "PORT": "5432",
         "OPTIONS":{"sslmode": "require"},
     }
