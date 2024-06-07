@@ -89,8 +89,8 @@ DATABASES = {
         # "NAME": BASE_DIR / "db.sqlite3",
 
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django",
-        "USER": "django@taskhive-db",
+        "NAME": "postgres",
+        "USER": "django",
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": "taskhive-db.postgres.database.azure.com",
         "PORT": "5432",
