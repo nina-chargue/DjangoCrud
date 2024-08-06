@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
 
 <main class="container">
@@ -8,19 +8,32 @@
 
       <ul class="list-group">
         {% for task in tasks %}
-        <a class="list-group-item" href="{% url 'task_detail' task.id %}">
-          <header class="d-flex justify-content-between">
-            {% if task.important %}
-            <h1 class="fw-bold text-success">{{task.title}}</h1>
-            {% else %}
-              <h1 class="fw-bold">{{task.title}}</h1> 
-            {% endif %}
-            <p>{{task.user.username}}</p>
-          </header>
+        <li class="list-group-item">
+          <a class="task-link" href="{% url 'task_detail' task.id %}">
+            <div class="d-flex justify-content-between">
+              {% if task.important %}
+              <h1 class="fw-bold title-important">{{task.title}}</h1>
+              {% else %}
+              <h1 class="fw-bold title">{{task.title}}</h1>
+              {% endif %}
+              <p>{{task.user.username}}</p>
+            </div>
 
-          <p>{{task.description}}</p>
-          {{task.datecompleted|date:'M j Y:i'}}
-        </a>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="description text-truncate mb-0">{{task.description}}</p>
+
+              {% if not task.dateCompleted %}
+                <form class="complete-form" action="{% url 'complete_task' task.id %}" method="POST">
+                  {% csrf_token %}
+                  <button class="btn small-button">Complete</button>
+                </form>
+              {% else %}
+              <p class="completed-text mb-0">Completed on: {{task.dateCompleted|date:'M j Y'}}</p>
+              {% endif %}
+
+            </div>
+          </a>
+        </li>
         {% endfor %}
       </ul>
     </div>
