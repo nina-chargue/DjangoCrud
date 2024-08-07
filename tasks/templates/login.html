@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load socialaccount %}
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -55,9 +57,11 @@
             <button>Register</button>
             <span>Or sign in with</span>
             <div class="social-container">
-              <!-- <a href="https://github.com/nina-chargue" class="social"><i class="lni lni-github"></i></a> -->
-              <a href="mailto:nicole.chargue@gmail.com" class="social"><i class="lni lni-google"></i></a>
-              <!-- <a href="https://www.linkedin.com/in/nicole-charpentier/" class="social"> <i class="lni lni-linkedin-original"></i></a> -->
+              {% for provider in providers %}
+                <a href="{% provider_login_url 'google' method='oauth2'%}" class="social">
+                  <i class="lni lni-{{ provider.provider }}"></i>
+                </a>
+              {% endfor %}
             </div>
             <!-- Error message placeholder -->
             <div id="register-error" class="error-message">{{ register_error }}</div>
@@ -78,9 +82,11 @@
             <button>Login</button>
             <span>Or sign in with</span>
             <div class="social-container">
-              <!-- <a href="https://github.com/nina-chargue" class="social"><i class="lni lni-github"></i></a> -->
-              <a href="mailto:nicole.chargue@gmail.com" class="social"><i class="lni lni-google"></i></a>
-              <!-- <a href="https://www.linkedin.com/in/nicole-charpentier/" class="social"> <i class="lni lni-linkedin-original"></i></a> -->
+              {% for provider in providers %}
+                <a href="{% provider_login_url 'google' method='oauth2'%}" class="social">
+                  <i class="lni lni-{{ provider.provider }}"></i>
+                </a>
+              {% endfor %}
             </div>
             <!-- Error message placeholder -->
             <div id="login-error" class="error-message">{{ login_error }}</div>

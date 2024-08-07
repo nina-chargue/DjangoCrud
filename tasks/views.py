@@ -17,8 +17,11 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.html import strip_tags
+from allauth.socialaccount.models import SocialApp, SocialAccount, SocialToken
 
 def login_or_register(request):
+    context = {"providers": SocialApp.objects.all()}
+
     if request.method == 'POST':
         # Registration form submission
         if 'password1' in request.POST and 'password2' in request.POST:
@@ -29,19 +32,23 @@ def login_or_register(request):
 
             # Ensure all fields are filled
             if not (username and email and password1 and password2):
-                return render(request, 'login.html', {'register_error': 'Please fill all missing blanks.'})
+                context['register_error'] = 'Please fill all missing blanks.'
+                return render(request, 'login.html', context)
 
             # Check if passwords match
             if password1 != password2:
-                return render(request, 'login.html', {'register_error': 'Password must match its confirmation.'})
+                context['register_error'] = 'Password must match its confirmation.'
+                return render(request, 'login.html', context)
 
             # Check if email already exists
             if User.objects.filter(email=email).exists():
-                return render(request, 'login.html', {'register_error': 'Email already exists.'})
+                context['register_error'] = 'Email already exists.'
+                return render(request, 'login.html', context)
 
             # Check if username already exists
             if User.objects.filter(username=username).exists():
-                return render(request, 'login.html', {'register_error': 'Username already exists.'})
+                context['register_error'] = 'Username already exists.'
+                return render(request, 'login.html', context)
 
             try:
                 # Create a new user
@@ -50,7 +57,8 @@ def login_or_register(request):
                 login(request, user)
                 return redirect('tasks')
             except IntegrityError:
-                return render(request, 'login.html', {'register_error': 'User already exists.'})
+                context['register_error'] = 'User already exists.'
+                return render(request, 'login.html', context)
 
         # Login form submission
         elif 'username_or_email' in request.POST and 'password' in request.POST:
@@ -59,23 +67,26 @@ def login_or_register(request):
 
             # Ensure both username/email and password are provided
             if not username_or_email or not password:
-                return render(request, 'login.html', {'login_error': 'Username or password is missing.'})
+                context['login_error'] = 'Username or password is missing.'
+                return render(request, 'login.html', context)
 
             # Authenticate the user with username or email
             user = authenticate(request, username=username_or_email, password=password) or \
                    authenticate(request, email=username_or_email, password=password)
             if user is None:
-                return render(request, 'login.html', {'login_error': 'Wrong credentials, try again.'})
+                context['login_error'] = 'Wrong credentials, try again.'
+                return render(request, 'login.html', context)
             # Login the authenticated user
             login(request, user)
             return redirect('tasks')
 
     elif request.method == 'GET':
         # Render the login form
-        return render(request, 'login.html')
+        return render(request, 'login.html', context)
 
     # Handle invalid requests
-    return render(request, 'login.html', {'error': 'Invalid request.'})
+    context['error'] = 'Invalid request.'
+    return render(request, 'login.html', context)
 
 # def login(request):
 #     if request.method == 'POST':

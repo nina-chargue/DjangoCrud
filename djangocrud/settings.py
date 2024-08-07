@@ -42,10 +42,40 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tasks',
+    'login',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SITE_ID = 2
+SOCIALACCOUNT_LOGIN_ON_GET=True
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+# SOCIALACCOUNT_EMAIL_REQUIRED = False
+# SOCIALACCOUNT_ADAPTER = "login.adapters.CustomSocialAccountAdapter"
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        # "APP": {
+        #     "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+        #     "secret": os.getenv("GOOGLE_SECRET"),
+        #     "key": "",
+        # },
+        # "SCOPE": [
+        #     "profile",
+        #     "email",
+        # ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+# ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -158,7 +188,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 #     # and creating unique names for each version so they can safely be cached forever.
 #     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-LOGIN_URL = '/signin'
+# LOGIN_URL = '/signin'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -170,6 +202,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
