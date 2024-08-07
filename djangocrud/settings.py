@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
-SITE_ID = 2
+SITE_ID = 3
 SOCIALACCOUNT_LOGIN_ON_GET=True
 # SOCIALACCOUNT_AUTO_SIGNUP = True
 # SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
@@ -60,18 +60,17 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        # "APP": {
-        #     "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-        #     "secret": os.getenv("GOOGLE_SECRET"),
-        #     "key": "",
-        # },
-        # "SCOPE": [
-        #     "profile",
-        #     "email",
-        # ],
         "AUTH_PARAMS": {
             "access_type": "online",
         },
+
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'REDIRECT_URI': '<your-correct-redirect-uri>',
+        # 'APP': {
+        #     'client_id': os.getenv("GOOGLE_CLIENT_ID"),
+        #     'secret': os.getenv("GOOGLE_SECRET"),
+        # }
     }
 }
 

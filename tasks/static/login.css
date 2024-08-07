@@ -22,24 +22,26 @@
   margin-top: 5px;
 }
 
-.navbar-toggler {
-  position: absolute;
-  right: 20px;
-  left: .5px;
-
-  .navbar-toggle-icon{
-    height: 30px;
-    margin-top: -1px;
-    padding: 10px;
-  }
+/* Navbar styles */
+.navbar {
+  background-color: #343a40;
 }
 
-.navbar{
-  height: 70px;
+.navbar-brand {
+  color: #ffffff; 
+  margin-left: 100px;
+  font-size: 23px;
 }
 
-.navbar-brand{
-  margin-left: 40px;
+.navbar-nav {
+  margin-left: auto; /* This pushes the nav items to the right */
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 46px;
 }
 
 .main-section {

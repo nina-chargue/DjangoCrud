@@ -53,8 +53,8 @@ footer nav a {
   color: #ffffff;
 }
 
-.navbar-toggle {
-  position: absolute;
+.navbar-toggler {
+  border: none;
 }
 
 /* Images */
